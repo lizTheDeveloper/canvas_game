@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Canvas Game</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <canvas id="gameCanvas" height="800" width="800"></canvas>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/entities.js"></script>
+    <script>
+    //game init
+    var newGame = new Game("gameCanvas");
+    //entity init
+    var newRect = new Rectangle(30, 25, "blue");
+    var newSq = new Square(60, 65, "goldenrod");
+
+    //connect to game board
+    newGame.addEntity(newRect);
+    newGame.addEntity(newSq);
+
+
+    // Game controls
+    $("body").on("keydown", function(event){
+      var keyPressed = event.keyCode;
+
+      if (keyPressed == 39) {
+        newSq.x += 5
+      }
+      if (keyPressed == 37) {
+        newSq.x -= 5
+      }
+    })
+
+    //game loop
+
+    setInterval(function () {
+      newGame.render()
+    }, 100)
+
+
+    // random enemy movement
+    setInterval(function () {
+      var direction = Math.floor(Math.random() * 100) % 4;
+      console.log(direction);
+      if (direction > 1) {
+        newRect.x += 10
+      } else {
+        newRect.x -= 10
+      }
+
+    }, 2000)
+    </script>
+  </body>
+</html>
